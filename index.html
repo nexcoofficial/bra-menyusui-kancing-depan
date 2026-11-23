@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#7b2f3f">
 <link rel="preload" as="image" href="https://down-id.img.susercontent.com/file/id-11134207-81zto-msp07pj5zmyq10.webp" fetchpriority="high" referrerpolicy="no-referrer">
 <style>
-:root{--bg:#f6efe7;--ink:#2a1d21;--y:#7b2f3f;--onacc:#fff;--onink:#fff;--hl:#f0dcdc;--panel:#fbf7f1;--ln:#d9cabe;--mut:#6c5a5a;--tile:#e9dcd0;--head:Georgia,"Times New Roman",serif}
+:root{--bg:#ffffff;--ink:#2a1d21;--y:#7b2f3f;--onacc:#fff;--onink:#fff;--hl:#f0dcdc;--panel:#f6f3f1;--ln:#e3dad4;--mut:#6c5a5a;--tile:#efe9e4;--head:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding-bottom:78px}
@@ -28,17 +28,17 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .thumbs img{width:100%;height:100%;object-fit:cover}
 .hd{padding:22px 0 4px}
 .sub{font-size:12px;color:var(--y);letter-spacing:1.3px;text-transform:uppercase;font-weight:700;display:flex;flex-wrap:wrap;gap:2px 14px}
-h1{font-family:var(--head);font-size:clamp(26px,7.4vw,35px);line-height:1.12;font-weight:400;margin:10px 0 12px;font-style:italic}
+h1{font-family:var(--head);font-size:clamp(24px,6.6vw,31px);line-height:1.15;font-weight:800;letter-spacing:-.01em;margin:10px 0 12px}
 .lead{font-size:16px;max-width:33em;color:#3d2d31}
 .price{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--ink)}
-.now{font-family:var(--head);font-size:34px;font-weight:700;color:var(--y);letter-spacing:-.01em}
+.now{font-family:var(--head);font-size:34px;font-weight:800;color:var(--y);letter-spacing:-.01em}
 .was{font-size:14px;color:var(--mut)}
 .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
 .facts div{padding:11px 6px;text-align:center;font-size:12.5px;color:var(--mut);line-height:1.25;border-right:1px solid var(--ln)}
 .facts div:last-child{border-right:0}
 .facts b{display:block;font-family:var(--head);font-size:21px;color:var(--ink);font-weight:700}
 .blk{padding:38px 0 0}
-.blk h2{font-family:var(--head);font-size:25px;font-weight:400;font-style:italic;line-height:1.15;margin-bottom:6px}
+.blk h2{font-family:var(--head);font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.15;margin-bottom:6px}
 .blk>p.s{color:var(--mut);font-size:14.5px;margin-bottom:12px}
 .sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
 .sw button{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;text-align:left;padding:0;border:2px solid transparent;background:none}
@@ -51,7 +51,7 @@ h1{font-family:var(--head);font-size:clamp(26px,7.4vw,35px);line-height:1.12;fon
 .grp h3{font-size:12px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:8px}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .seg button{border:1px solid var(--ink);padding:9px 8px 8px;text-align:center;background:transparent}
-.seg button b{display:block;font-family:var(--head);font-size:20px;line-height:1.1}
+.seg button b{display:block;font-size:19px;font-weight:800;line-height:1.1}
 .seg button span{display:block;font-size:11.5px;color:var(--mut);margin-top:2px}
 .seg button.on{background:var(--y);border-color:var(--y);color:var(--onink)}
 .seg button.on span{color:var(--onink);opacity:.85}
@@ -127,7 +127,7 @@ details p{padding:0 0 14px;color:var(--mut);font-size:14.5px}
 .ooef form .checkout-actions .btn-complete-order svg{width:20px;height:20px}
 .ooef .oo-hl,.ooef tr.oo-hl{background:var(--hl)!important}
 .ord{background:var(--y)}
-.ord h2{font-weight:400;font-style:italic}
+.ord h2{font-weight:800;font-style:normal}
 .ooef{border-top:0}
 .ooef form .ooef-variations-table tr{border:1px solid var(--ink)}
 #order{scroll-margin-top:12px}
@@ -258,9 +258,25 @@ function stat(){const e=$('#pst');const pr=priceOf();
 stat();
 const rows=()=>[...document.querySelectorAll('.ooef-variations-table tbody tr')];
 const lab=r=>norm((r.querySelector('.oo-variation-label')||{}).textContent);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
 let syncing=false;
-async function syncForm(){if(syncing)return false;const L=labelOf();const rs=rows();if(!L||!rs.length)return false;syncing=true;
- try{const k=norm(L);const hit=rs.filter(r=>lab(r)===k)[0];if(!hit)return false;
+async function syncForm(){if(syncing)return false;const L=labelOf();if(!L)return false;syncing=true;
+ try{const k=norm(L);
+  const sel=document.querySelector('.ooef .oo-variation-select');
+  if(sel){
+   const opt=[...sel.options].find(o=>norm(o.text)===k);if(!opt)return false;
+   const trs=[...sel.closest('tbody').children];
+   for(let i=trs.length-1;i>0;i--){const rm=trs[i].querySelector('.oo-variation-remove-row');if(rm)rm.click()}
+   const jq=window.jQuery||window.$;
+   if(jq&&jq.fn&&jq.fn.select2)jq(sel).val(opt.value).trigger('change');else{sel.value=opt.value;sel.dispatchEvent(new Event('change',{bubbles:true}))}
+   await wait(150);
+   const tr=sel.closest('tr');let inp=tr.querySelector('input.oo-combination');
+   const plus=tr.querySelector('.oo-variation-qty-plus'),minus=tr.querySelector('.oo-variation-qty-minus');
+   let n=parseInt(inp.value)||0;
+   if(n<1){for(let i=0;i<1-n;i++)plus.click()}
+   return true}
+  const rs=rows();if(!rs.length)return false;
+  const hit=rs.filter(r=>lab(r)===k)[0];if(!hit)return false;
   for(const r of rs){const inp=r.querySelector('input.oo-combination');if(!inp)continue;const now=parseInt(inp.value)||0;
    const target=r===hit?Math.max(now,1):0;const btn=r.querySelector(target>now?'.oo-variation-qty-plus':'.oo-variation-qty-minus');if(!btn)continue;
    for(let i=0;i<Math.abs(target-now);i++)btn.click()}
